@@ -11,11 +11,12 @@ Stickr is a fully customizable **Jetpack Compose** sticker view that supports:
 
 ---
 
+
 📺 **Watch the demo video**  
 [![YouTube Video](https://img.shields.io/badge/Watch%20Demo%20on-YouTube-red?logo=youtube)](https://youtube.com/shorts/1Gv4oCezLd8)  
-*(Replace with actual video link)*
 
 ---
+
 
 ## 📦 Installation (via JitPack)
 
@@ -61,33 +62,16 @@ Stickr(
 # 🎨 Control Icons (Customize or Replace)
 
 ```kotlin
-val customControls = StickrControls(
-    showDelete = true,
-    showDuplicate = true,
-    showFlip = true,
-    showResize = true,
-    deleteIcon = R.drawable.ic_my_delete,
-    duplicateIcon = R.drawable.ic_my_duplicate,
-    flipIcon = R.drawable.ic_my_flip,
-    resizeIcon = R.drawable.ic_my_resize
+val customControls = listOf(
+    StickrControl(StickrControlType.DELETE, R.drawable.ic_my_delete),
+    StickrControl(StickrControlType.DUPLICATE, R.drawable.ic_my_duplicate),
+    StickrControl(StickrControlType.FLIP, R.drawable.ic_my_flip, isVisible = false),
+    StickrControl(StickrControlType.RESIZE, R.drawable.ic_my_resize)
 )
 
 Stickr(
     content = StickrContent.DrawableRes(R.drawable.my_sticker),
     controls = customControls
-)
-```
-
-## 🧩 Toggle Control Buttons
-
-You can show or hide each control independently:
-
-```kotlin
-StickrControls(
-    showDelete = false,
-    showDuplicate = true,
-    showFlip = false,
-    showResize = true
 )
 ```
 
@@ -122,6 +106,7 @@ Stickr(
 
 ```kotlin
 val stickers = remember { mutableStateListOf<StickrData>() }
+var selectedId by remember { mutableStateOf<Int?>(null) }
 
 stickers.forEach { data ->
     key(data.id) {
